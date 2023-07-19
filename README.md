@@ -21,7 +21,7 @@ helm repo add jetstack https://charts.jetstack.io
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.crds.yaml -n cert-manager
 helm install cert-manager jetstack/cert-manager -n cert-manager --create-namespace --version v1.12.0 -f deployment/kustomization/production/charts/cert-manager/values.yaml
 ```
-### YugabyteDB
+### YugabyteDB (Postgresql and Cassandra)
 ```
 helm repo add yugabytedb https://charts.yugabyte.com
 kubectl create ns yugabyte
