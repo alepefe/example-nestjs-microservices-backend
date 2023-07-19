@@ -1,0 +1,22 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: ingress-jwt
+  namespace: istio-ingress
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingress
+  jwtRules:
+    - issuer: user-service
+      jwksUri: http://user-service.default.svc.cluster.local:3000/jwks
+      fromHeaders:
+        - name: Authorization
+          prefix: "Bearer "
+      outputClaimToHeaders:
+        - claim: sub
+          header: x-authenticated-user-id
+
+        - claim: roles
+          header: x-authenticated-user-roles

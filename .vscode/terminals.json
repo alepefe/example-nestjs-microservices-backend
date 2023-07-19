@@ -1,0 +1,54 @@
+{
+    "autorun": true,
+    "autokill": true,
+    "terminals": [
+        {
+            "name": "Infrastructure",
+            "execute": false,
+            "open": true,
+            "focus": false,
+            "recicle": true,
+            "commands": ["make dev-infra"]
+        },
+        {
+            "name": "Minikube",
+            "execute": false,
+            "open": true,
+            "focus": true,
+            "recicle": true,
+            "commands": ["minikube --profile xxx-backend --memory 16384 --cpus 4 start && minikube --profile xxx-backend addons enable metrics-server && minikube --profile xxx-backend dashboard --port 41763 --url"]
+        },
+        {
+            "name": "Tilt",
+            "open": true,
+            "focus": false,
+            "recicle": true,
+            "execute": false,
+            "commands": ["sleep 30 && tilt up --port 10303"]
+        },
+        {
+            "name": "RootFolder",
+            "open": true,
+            "focus": false,
+            "recicle": true,
+            "execute": false,
+            "commands": [""]
+        },
+        {
+            "name": "UserService",
+            "open": true,
+            "focus": false,
+            "recicle": true,
+            "execute": false,
+            "commands": ["cd user-service"]
+        },
+        {
+            "name": "ProviderService",
+            "open": true,
+            "focus": false,
+            "recicle": true,
+            "execute": false,
+            "commands": ["cd provider-service"]
+        }
+    ]
+}

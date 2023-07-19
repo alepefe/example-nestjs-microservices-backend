@@ -1,0 +1,11 @@
+pilot:
+  nodeSelector:
+    for: istio
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 0.5Gi
+
+telemetry:
+  enable: false

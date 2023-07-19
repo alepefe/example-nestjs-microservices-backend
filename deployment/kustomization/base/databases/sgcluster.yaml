@@ -1,0 +1,18 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  name: cluster
+  namespace: stackgres
+spec:
+  instances: 1
+  postgres:
+    version: 'latest'
+  pods:
+    disableMetricsExporter: true
+    scheduling:
+      nodeSelector:
+        for: postgres
+    persistentVolume:
+      storageClass: local-storage
+      size: '20Gi'
+  sgInstanceProfile: 'size-xs'

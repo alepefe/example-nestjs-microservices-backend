@@ -1,0 +1,13 @@
+cainjector:
+  nodeSelector:
+    kubernetes.io/os: linux
+    for: istio
+
+webhook:
+  nodeSelector:
+    kubernetes.io/os: linux
+    for: istio
+
+nodeSelector:
+  kubernetes.io/os: linux
+  for: istio

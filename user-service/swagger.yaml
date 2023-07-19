@@ -1,0 +1,561 @@
+openapi: 3.0.3
+info:
+  title: xxx Backend
+  description: |
+  contact:
+    email: alejandro@protonmail.com
+  version: 0.1.0
+servers:
+  - url: https://api.xxx.io/v1
+    description: Production env
+tags:
+  - name: Users
+paths:
+  /users/register:
+    post:
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserBody'
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTPair'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/authenticate:
+    post:
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateUserBody'
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTPair'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: Authentication Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      description: |
+        The userId can be found in the accessToken unescrypted payload as sub
+      security:
+        - bearer_token: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: AuthenticationError or AuthorizationError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/send_verification_email:
+    post:
+      tags:
+        - Users
+      description: |
+      security:
+        - bearer_token: []
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendVerificationEmailBody'
+      responses:
+        '204':
+          description: Successful Request
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: AuthenticationError or AuthorizationError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/verify_email:
+    post:
+      tags:
+        - Users
+      description: |
+      security:
+        - bearer_token: []
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailBody'
+      responses:
+        '204':
+          description: Successful Request
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: AuthenticationError or AuthorizationError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/change_password:
+    post:
+      tags:
+        - Users
+      description: |
+      security:
+        - bearer_token: []
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordBody'
+      responses:
+        '204':
+          description: Successful Request
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: AuthenticationError or AuthorizationError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/send_reset_password_email:
+    post:
+      tags:
+        - Users
+      description: |
+      security:
+        - bearer_token: []
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendResetPasswordEmailBody'
+      responses:
+        '204':
+          description: Successful Request
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: AuthenticationError or AuthorizationError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+  /users/reset_password:
+    post:
+      tags:
+        - Users
+      description: |
+      security:
+        - bearer_token: []
+      requestBody:
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordBody'
+      responses:
+        '204':
+          description: Successful Request
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseBody'
+        '401':
+          description: AuthenticationError or AuthorizationError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponseBody'
+        '500':
+          description: Service unavailable / Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericErrorResponseBody'
+components:
+  parameters:
+    DeviceIdHeader:
+      name: x-device-id
+      in: header
+      description: Client generated device uid
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearer_token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    GenericErrorResponseBody:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: "Error constructor name"
+              message:
+                type: string
+                description: "Error message"
+            required:
+              - name
+              - message
+          description: |
+            An array of errors that may occur.
+    NotFoundResponseBody:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: "Error constructor name"
+                enum:
+                  - ObjectNotFounderror
+              message:
+                type: string
+                description: "Error message"
+            required:
+              - name
+              - message
+          description: |
+            An array of errors that may occur.
+    BadRequestResponseBody:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: "Error constructor name"
+                enum:
+                  - InvalidArgumentError
+              message:
+                type: string
+                description: "Error message"
+              key:
+                type: string
+                description: "key is a property not validating sent in the request body"
+            required:
+              - name
+              - message
+          description: |
+            An array of errors that may occur. The `key` property is optional and may not be present in some error objects.
+    JWTPair:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresAt:
+          type: integer
+        refreshExpiresAt:
+          type: integer
+    RegisterUserBody:
+      type: object
+      properties:
+        authStrategy:
+          type: string
+          enum:
+            - local
+        email:
+          type: string
+        password:
+          type: string
+        refreshToken:
+          type: string
+        fcmToken:
+          type: string
+      required:
+        - authStrategy
+    AuthenticateUserBody:
+      type: object
+      properties:
+        authStrategy:
+          type: string
+          enum:
+            - local
+            - google_id_token
+            - refresh_token
+        email:
+          type: string
+        password:
+          type: string
+        idToken:
+          type: string
+        fcmToken:
+          type: string
+      required:
+        - authStrategy
+    SendVerificationEmailBody:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        email:
+          type: string
+      required:
+        - userId
+        - email
+    VerifyEmailBody:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        email:
+          type: string
+        code:
+          type: string
+      required:
+        - userId
+        - email
+        - code
+    ChangePasswordBody:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        oldPassword:
+          type: string
+        password:
+          type: string
+      required:
+        - userId
+        - oldPassword
+        - password
+    SendResetPasswordEmailBody:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+    ResetPasswordBody:
+      type: object
+      properties:
+        email:
+          type: string
+        newPassword:
+          type: string
+        code:
+          type: string
+      required:
+        - email
+        - newPassword
+        - code
+    User:
+      type: object
+      properties:
+        id: 
+          type: string
+          format: uuid
+        active:
+          type: boolean
+        authStrategy:
+          type: string
+          enum:
+            - local
+            - google_id_token
+        emailVerified:
+          type: boolean
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+              - user
+              - admin
+        lastModified:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        

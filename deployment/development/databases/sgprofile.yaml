@@ -1,0 +1,9 @@
+---
+apiVersion: stackgres.io/v1
+kind: SGInstanceProfile
+metadata:
+  name: size-xs
+  namespace: default
+spec:
+  cpu: 1.5
+  memory: "3.5Gi"

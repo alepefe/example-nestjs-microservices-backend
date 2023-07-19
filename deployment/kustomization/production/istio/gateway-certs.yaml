@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cluster-gateway
+  namespace: istio-ingress
+spec:
+  secretName: cluster-gateway
+  commonName: api.xxx.io
+  dnsNames:
+    - api.xxx.io
+  issuerRef:
+    # name: selfsigned-issuer
+    name: letsencrypt-prod
+    kind: ClusterIssuer

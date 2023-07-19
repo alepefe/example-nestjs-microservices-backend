@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app.kubernetes.io/name: user-service
+    app.kubernetes.io/component: user-service
+    app.kubernetes.io/part-of: xxx-backend
+    app.kubernetes.io/version: "0.1.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: user-service
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: user-service
+        app.kubernetes.io/component: user-service
+        app.kubernetes.io/part-of: xxx-backend
+        app.kubernetes.io/version: "0.1.0"
+    spec:
+      containers:
+        - name: user-service
+          image: registry.shinobidev.com/xxx-backend-user-service
+          imagePullPolicy: Always
+          command: ["yarn", "start"]
+          env:
+            - name: TZ
+              value: UTC

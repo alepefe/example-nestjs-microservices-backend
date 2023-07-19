@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  template:
+    spec:
+      nodeSelector:
+        for: node-single
+      imagePullSecrets:
+        - name: docker-registry
+      containers:
+        - name: user-service
+          command: ["yarn", "start:prod"]   
+          env:    
+            - name: NODE_ENV
+              value: 'production'
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            
+            - name: USER_POSTGRES_HOST
+              value: yb-tservers.yugabyte.svc
+            - name: USER_POSTGRES_PORT
+              value: '5433'
+            - name: USER_POSTGRES_USER
+              value: app
+            - name: USER_POSTGRES_PASSWORD
+              value: Testtest1
+
+            - name: USER_SMTP_HOST
+              value: email-smtp.eu-west-3.amazonaws.com
+            - name: USER_SMTP_PORT
+              value: '465'
+            - name: USER_SMTP_USER
+              value: XXXXXXXXXXXXX
+            - name: USER_SMTP_PASSWORD
+              value: XXXXXXXXXXXXX

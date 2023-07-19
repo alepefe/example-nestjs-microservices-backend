@@ -1,0 +1,30 @@
+storage:
+  ephemeral: false
+  master:
+    count: 1
+    size: 10Gi
+    storageClass: local-storage
+  tserver:
+    count: 1
+    size: 10Gi
+    storageClass: local-storage
+
+resource:
+  master:
+    requests:
+      cpu: 1.5
+      memory: 2Gi
+  tserver:
+    requests:
+      cpu: 1.5
+      memory: 4Gi
+
+replicas:
+  master: 1
+  tserver: 1
+  totalMasters: 1
+
+nodeSelector:
+  for: postgres
+
+enableLoadBalancer: false

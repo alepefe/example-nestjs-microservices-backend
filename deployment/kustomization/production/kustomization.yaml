@@ -1,0 +1,23 @@
+bases:
+  - ../base
+
+resources:
+  # istio-ingress namespace
+  # - istio/ingress-jwt.yaml
+  # - istio/gateway-certs.yaml
+  # - istio/gateway.yaml
+
+  # No need testing
+  # - istio/virtual-services/http-to-https-redirect.yaml
+  # - istio/virtual-services/acme-solver.yaml
+  
+  - storage/storage-class.yaml
+  - istio/virtual-services/user-service.yaml
+  - cert-manager/cluster-issuer.yaml
+
+patchesStrategicMerge:
+  - deployments/user-service.yaml
+
+images:
+  - name: registry.shinobidev.com/xxx-backend-user-service
+    newTag: "1.0.0-alpha9"

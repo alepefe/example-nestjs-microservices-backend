@@ -1,0 +1,9 @@
+kind: Kustomization
+
+resources:
+  # - databases/sgprofile.yaml
+  # - databases/sgcluster.yaml
+
+  - secrets/private-registry.yaml
+  - deployments/user-service.yaml
+  - services/user-service.yaml

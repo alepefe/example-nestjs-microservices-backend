@@ -1,0 +1,15 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  name: stackgres
+  namespace: default
+spec:
+  instances: 1
+  postgres:
+    version: 'latest'
+    extensions:
+    - name: 'pg_trgm'
+  pods:
+    persistentVolume:
+      size: '5Gi'
+  sgInstanceProfile: 'size-xs'
