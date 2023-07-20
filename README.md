@@ -1,6 +1,7 @@
 # Example microservices backend
 ![Work in Progress](https://img.shields.io/badge/Work%20in%20Progress-yellow.svg?style=flat-square)
 
+This repo does not include UNIT, INTEGRATION OR e2e tests.
 ```
 kubectl create namespace istio-system
 kubectl create namespace istio-ingress
